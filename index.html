@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <!-- Viewport configuration for full responsiveness -->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>We've Moved! Redirecting...</title>
+    
+    <!-- Fallback Meta Refresh Redirection -->
+    <meta http-equiv="refresh" content="5;url=https://drewsdata.github.io/wser_splits_ai/">
+    
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <!-- Inter Font -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    
+    <!-- FontAwesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+        }
+
+        /* SVG Circular Progress Animation Styling */
+        .progress-ring__circle {
+            transition: stroke-dashoffset 1s linear;
+            transform: rotate(-90deg);
+            transform-origin: 50% 50%;
+        }
+
+        /* Subtle pulse keyframe animation */
+        @keyframes subtlePulse {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.03); }
+        }
+
+        .pulse-card {
+            animation: subtlePulse 4s infinite ease-in-out;
+        }
+    </style>
+</head>
+<body class="bg-slate-900 text-slate-100 min-h-screen flex items-center justify-center p-4 relative overflow-hidden select-none">
+
+    <!-- Background Decorative Elements -->
+    <div class="absolute -top-32 -left-32 w-96 h-96 bg-indigo-600/20 rounded-full blur-3xl pointer-events-none"></div>
+    <div class="absolute -bottom-32 -right-32 w-96 h-96 bg-blue-600/20 rounded-full blur-3xl pointer-events-none"></div>
+
+    <!-- Main Container Card -->
+    <main class="w-full max-w-lg bg-slate-800/80 backdrop-blur-xl border border-slate-700/60 rounded-3xl p-8 sm:p-10 shadow-2xl relative z-10 text-center pulse-card">
+        
+        <!-- Status Badge -->
+        <div class="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-indigo-500/10 border border-indigo-500/30 text-indigo-400 text-xs font-semibold tracking-wide uppercase mb-6">
+            <span class="w-2 h-2 rounded-full bg-indigo-400 animate-ping"></span>
+            Site Has Moved
+        </div>
+
+        <!-- Heading -->
+        <h1 class="text-3xl sm:text-4xl font-extrabold text-white tracking-tight mb-3">
+            We've Upgraded!
+        </h1>
+
+        <!-- Explanation Message -->
+        <p class="text-slate-300 text-base leading-relaxed mb-8">
+            This site has moved to a new and improved location with enhanced features. Please update your bookmarks accordingly!
+        </p>
+
+        <!-- Circular Countdown Timer Container -->
+        <div class="relative w-36 h-36 mx-auto mb-8 flex items-center justify-center">
+            <svg class="w-full h-full" viewBox="0 0 120 120">
+                <!-- Background Ring -->
+                <circle
+                    class="text-slate-700/50"
+                    stroke-width="8"
+                    stroke="currentColor"
+                    fill="transparent"
+                    r="52"
+                    cx="60"
+                    cy="60"
+                />
+                <!-- Animated Progress Ring -->
+                <circle
+                    id="progress-circle"
+                    class="progress-ring__circle text-indigo-500"
+                    stroke-width="8"
+                    stroke-dasharray="326.72"
+                    stroke-dashoffset="0"
+                    stroke-linecap="round"
+                    stroke="currentColor"
+                    fill="transparent"
+                    r="52"
+                    cx="60"
+                    cy="60"
+                />
+            </svg>
+
+            <!-- Inner Text Counter -->
+            <div class="absolute inset-0 flex flex-col items-center justify-center text-center">
+                <span id="countdown" class="text-4xl font-extrabold text-white tracking-tight">5</span>
+                <span class="text-xs font-medium text-slate-400 uppercase tracking-widest mt-0.5">Seconds</span>
+            </div>
+        </div>
+
+        <!-- Direct Destination Link / Manual Button -->
+        <div class="space-y-4">
+            <a 
+                id="redirect-btn"
+                href="https://drewsdata.github.io/wser_splits_ai/" 
+                class="w-full inline-flex items-center justify-center gap-3 bg-gradient-to-r from-indigo-500 to-blue-600 hover:from-indigo-600 hover:to-blue-700 text-white font-semibold py-4 px-6 rounded-xl transition-all duration-200 transform hover:-translate-y-0.5 shadow-lg shadow-indigo-500/25 active:translate-y-0"
+            >
+                <span>Go to New Site Immediately</span>
+                <i class="fa-solid font-bold fa-arrow-right text-sm"></i>
+            </a>
+
+            <!-- Target URL Display -->
+            <p class="text-xs text-slate-400 truncate px-2">
+                Destination: 
+                <span class="text-indigo-400 underline font-mono">https://drewsdata.github.io/wser_splits_ai/</span>
+            </p>
+        </div>
+
+    </main>
+
+    <!-- JavaScript logic for countdown and redirection -->
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const destinationUrl = 'https://drewsdata.github.io/wser_splits_ai/';
+            const totalSeconds = 5;
+            let remainingSeconds = totalSeconds;
+
+            const countdownElement = document.getElementById('countdown');
+            const progressCircle = document.getElementById('progress-circle');
+
+            // SVG Circle Circumference calculation: 2 * π * r (r = 52)
+            const circumference = 2 * Math.PI * 52;
+            progressCircle.style.strokeDasharray = `${circumference} ${circumference}`;
+
+            function setProgress(percent) {
+                const offset = circumference - (percent / 100) * circumference;
+                progressCircle.style.strokeDashoffset = offset;
+            }
+
+            // Initial setting
+            setProgress(100);
+
+            // Timer interval updating every second
+            const timer = setInterval(() => {
+                remainingSeconds -= 1;
+
+                // Update numerical counter UI
+                if (remainingSeconds >= 0) {
+                    countdownElement.textContent = remainingSeconds;
+                    const percent = (remainingSeconds / totalSeconds) * 100;
+                    setProgress(percent);
+                }
+
+                // Execute redirection when timer completes
+                if (remainingSeconds <= 0) {
+                    clearInterval(timer);
+                    window.location.href = destinationUrl;
+                }
+            }, 1000);
+        });
+    </script>
+</body>
+</html>
